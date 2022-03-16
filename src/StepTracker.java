@@ -5,18 +5,19 @@ import java.util.Scanner;
 public class StepTracker {
 
 
-    int dayMax = 30;
+    int dayMax = 30; // как в задании написано 30 дней
     int goalStep = 10000;
-    int stepSum = 0;
+
+
     HashMap<Integer, ArrayList<Integer>> stepMonth = new HashMap<>();
     Converter converter = new Converter();
 
     public StepTracker() {
+
         for (int i = 1; i <= 12; i++) {
             stepMonth.put(i, new ArrayList<Integer>(dayMax));
             for (int y = 0; y <= dayMax; y++) {
-                Integer z = 0;
-                stepMonth.get(i).add(y, z);
+                stepMonth.get(i).add(y, 0);
             }
         }
     }
@@ -27,18 +28,20 @@ public class StepTracker {
         } else if (day <= dayMax) {
             stepMonth.get(months).set(day - 1, step);
         } else {
-            System.out.println("В месяце всего " + dayMax + " дней. Введите день правильно.");
+            System.out.println("В месяце всего " + dayMax + " дней.");
+            System.out.println("Введите день правильно.");
         }
         return stepMonth;
     }
 
+
     int getStepSum(int monthStat) {
+        int stepSum = 0;
         ArrayList<Integer> getStepMonth = stepMonth.get(monthStat);
         for (int i = 0; i < getStepMonth.size(); i++) {
-            stepSum = stepSum + getStepMonth.get(i);
+            stepSum += getStepMonth.get(i);
+
         }
-        System.out.println();
-        System.out.println("Общее количество шагов: " + stepSum);
         return stepSum;
     }
 
@@ -61,8 +64,10 @@ public class StepTracker {
         }
     }
 
+
+
     double getStepAverage(int monthsStat) { // Среднее
-        double averageStep = stepSum / dayMax;
+        double averageStep = getStepSum(monthsStat) / dayMax;
         System.out.println("Среднее количество шагов:" + averageStep);
         return averageStep;
     }
@@ -86,24 +91,24 @@ public class StepTracker {
     }
 
     void getStaticMonths(int months) { // Статистика
+        System.out.println("Общее количество шагов: " + getStepSum(months));
         getStepStat(months);
         getStepSum(months);
         getStepMax(months);
         getStepAverage(months);
-        converter.stepDistance(stepSum);
-        converter.getCalories(stepSum);
+        converter.stepDistance(getStepSum(months));
+        converter.getCalories(getStepSum(months));
         getStepWin(months);
     }
 
+
     void objectiveStep(int objective) {
-        while (true) {
             if (objective < 0) {
                 System.out.println(" Введите новую корректную цель");
             } else {
                 goalStep = objective;
                 System.out.println("Новая цель в " + goalStep + " установлена!");
             }
-            break;
         }
     }
-}
+

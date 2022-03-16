@@ -13,4 +13,5 @@ public class Converter {
         System.out.println("Количество сожжённых килокалорий: " + cal + " кКал");
         return cal;
     }
+
 }
