@@ -1,11 +1,12 @@
 import java.util.Scanner;
 
 public class Main {
+
     public static void main(String[] args) {
 
         Scanner scanner = new Scanner(System.in);
         StepTracker stepTracker = new StepTracker();
-
+        Converter converter = new Converter();
         while (true) {
             printMenu();
             int command = scanner.nextInt();
@@ -22,8 +23,9 @@ public class Main {
             } else if (command == 2) {
                 System.out.println("За какой месяц вывести статистику?");
                 int monthsStat = scanner.nextInt();
-                System.out.println(" Вы имеете следующую статистику:");
+                System.out.println("Вы имеете следующую статистику:");
                 stepTracker.getStaticMonths(monthsStat);
+
 
             } else if (command == 3) {
                 System.out.println("Введите новую цель по количеству шагов в день:");

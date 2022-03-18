@@ -1,20 +1,19 @@
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Scanner;
 
 public class StepTracker {
 
 
     int dayMax = 30; // как в задании написано 30 дней
     int goalStep = 10000;
-
+    int mountMax = 12;
 
     HashMap<Integer, ArrayList<Integer>> stepMonth = new HashMap<>();
     Converter converter = new Converter();
 
     public StepTracker() {
 
-        for (int i = 1; i <= 12; i++) {
+        for (int i = 1; i <= mountMax; i++) {
             stepMonth.put(i, new ArrayList<Integer>(dayMax));
             for (int y = 0; y <= dayMax; y++) {
                 stepMonth.get(i).add(y, 0);
@@ -23,7 +22,7 @@ public class StepTracker {
     }
 
     HashMap<Integer, ArrayList<Integer>> getStepData(int months, int day, int step) { //пройденные шаги
-        if (day < 1) {
+        if (day <= 1) {
             System.out.println("Введите день правильно.");
         } else if (day <= dayMax) {
             stepMonth.get(months).set(day - 1, step);
@@ -38,7 +37,7 @@ public class StepTracker {
     int getStepSum(int monthStat) {
         int stepSum = 0;
         ArrayList<Integer> getStepMonth = stepMonth.get(monthStat);
-        for (int i = 0; i < getStepMonth.size(); i++) {
+        for (int i = 0; i <= getStepMonth.size(); i++) {
             stepSum += getStepMonth.get(i);
 
         }
@@ -48,12 +47,12 @@ public class StepTracker {
     double getStepMax(int monthsStat) { // Максимальное
         int maxStepUser = 0;
         ArrayList<Integer> getStepMonth = stepMonth.get(monthsStat);
-        for (int i = 0; i < getStepMonth.size(); i++) {
+        for (int i = 0; i <= getStepMonth.size(); i++) {
             if (maxStepUser < getStepMonth.get(i)) {
                 maxStepUser = getStepMonth.get(i);
             }
         }
-        System.out.println("Максимальное количество шагов составило: " + maxStepUser);
+
         return maxStepUser;
     }
 
@@ -65,10 +64,8 @@ public class StepTracker {
     }
 
 
-
     double getStepAverage(int monthsStat) { // Среднее
-        double averageStep = getStepSum(monthsStat) / dayMax;
-        System.out.println("Среднее количество шагов:" + averageStep);
+        double averageStep = (double) getStepSum(monthsStat) / dayMax;
         return averageStep;
     }
 
@@ -76,7 +73,7 @@ public class StepTracker {
         int stepSeries = 0;
         int checkDay = 0;
         ArrayList<Integer> stepMonths = stepMonth.get(monthsStat);
-        for (int i = 0; i < stepMonths.size(); i++) {
+        for (int i = 1; i < stepMonths.size(); i++) {
             if (stepMonths.get(i) >= goalStep) {
                 checkDay = checkDay + 1;
             } else {
@@ -91,24 +88,27 @@ public class StepTracker {
     }
 
     void getStaticMonths(int months) { // Статистика
-        System.out.println("Общее количество шагов: " + getStepSum(months));
-        getStepStat(months);
-        getStepSum(months);
-        getStepMax(months);
-        getStepAverage(months);
-        converter.stepDistance(getStepSum(months));
-        converter.getCalories(getStepSum(months));
-        getStepWin(months);
-    }
-
-
-    void objectiveStep(int objective) {
-            if (objective < 0) {
-                System.out.println(" Введите новую корректную цель");
-            } else {
-                goalStep = objective;
-                System.out.println("Новая цель в " + goalStep + " установлена!");
+        if (months <= mountMax && months > 0) {
+            System.out.println("Общее количество шагов: " + getStepSum(months));
+            getStepStat(months);
+            getStepSum(months);
+            System.out.println("Максимальное количество шагов составило: " + getStepMax(months));
+            System.out.println("Среднее количество шагов:" + getStepAverage(months));
+            System.out.println("Пройденная дистанция: " + converter.stepDistance(getStepSum(months)) + " в км.");
+            System.out.println("Количество сожжённых килокалорий: " + converter.getCalories(getStepSum(months)) + " кКал");
+            getStepWin(months);
+        } else {
+            System.out.println("Введенного месяца не существует.");
             }
         }
+
+    void objectiveStep(int objective) {
+        if (objective < 0) {
+            System.out.println(" Введите новую корректную цель");
+        } else {
+            goalStep = objective;
+            System.out.println("Новая цель в " + goalStep + " установлена!");
+        }
     }
+}
 
