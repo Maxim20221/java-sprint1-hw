@@ -21,14 +21,21 @@ public class StepTracker {
         }
     }
 
-    HashMap<Integer, ArrayList<Integer>> getStepData(int months, int day, int step) { //пройденные шаги
-        if (day <= 1) {
-            System.out.println("Введите день правильно.");
-        } else if (day <= dayMax) {
-            stepMonth.get(months).set(day - 1, step);
+    HashMap<Integer, ArrayList<Integer>> getStepData(int months, int day, int step) {   //пройденные шаги
+        if (months < 1 || months > mountMax) {
+            System.out.println("Введите месяц правильно.");
+            System.out.println("Всего " + mountMax + " месяцев.");
         } else {
-            System.out.println("В месяце всего " + dayMax + " дней.");
-            System.out.println("Введите день правильно.");
+            if (day <= 0 || day > dayMax) {
+                System.out.println("Введите день правильно.");
+                System.out.println("В месяце всего " + dayMax + " дней.");
+            } else if (day >= 1 && day <= dayMax && step <= 0) {
+                System.out.println("Введите количество шагов правильно.");
+            } else if (day >= 1 && day <= dayMax && step >= 0) {
+                stepMonth.get(months).set(day - 1, step);
+            } else {
+                System.out.println("Введите количество шагов правильно.");
+            }
         }
         return stepMonth;
     }
@@ -39,7 +46,6 @@ public class StepTracker {
         ArrayList<Integer> getStepMonth = stepMonth.get(monthStat);
         for (int i = 0; i <= getStepMonth.size(); i++) {
             stepSum += getStepMonth.get(i);
-
         }
         return stepSum;
     }
@@ -52,7 +58,6 @@ public class StepTracker {
                 maxStepUser = getStepMonth.get(i);
             }
         }
-
         return maxStepUser;
     }
 
@@ -99,8 +104,8 @@ public class StepTracker {
             getStepWin(months);
         } else {
             System.out.println("Введенного месяца не существует.");
-            }
         }
+    }
 
     void objectiveStep(int objective) {
         if (objective < 0) {
@@ -111,4 +116,3 @@ public class StepTracker {
         }
     }
 }
-

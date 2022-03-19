@@ -6,13 +6,13 @@ public class Main {
 
         Scanner scanner = new Scanner(System.in);
         StepTracker stepTracker = new StepTracker();
-        Converter converter = new Converter();
+
         while (true) {
             printMenu();
             int command = scanner.nextInt();
             if (command == 1) {
                 System.out.println("Укажите месяц, за который необходимо ввести количество шагов:");
-                Integer months = scanner.nextInt();
+                int months = scanner.nextInt();
                 System.out.println("Укажите день, за который необходимо ввести количество шагов:");
                 int day = scanner.nextInt();
                 System.out.println("Укажите количество шагов:");

@@ -2,14 +2,12 @@ public class Converter {
 
     double stepDistance(int summa) {
         double lengthStep = 75 * 1e-5;
-        double distance = summa * lengthStep;
-        return distance;
+        return summa * lengthStep;
     }
 
     double getCalories(int summa) {
         double stepCal = 50;
-        double cal = ((stepCal) / 1000) * summa;
-        return cal;
+        return ((stepCal) / 1000) * summa;
     }
 
 }
