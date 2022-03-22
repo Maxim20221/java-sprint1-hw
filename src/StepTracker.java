@@ -4,7 +4,7 @@ import java.util.HashMap;
 public class StepTracker {
 
 
-    int dayMax = 30; // как в задании написано 30 дней
+    int dayMax = 30;
     int goalStep = 10000;
     int mountMax = 12;
 
@@ -21,30 +21,25 @@ public class StepTracker {
         }
     }
 
-    HashMap<Integer, ArrayList<Integer>> getStepData(int months, int day, int step) {   //пройденные шаги
+    void getStepData (int months, int day, int step) {
+        HashMap<Integer, ArrayList<Integer>> getStepData;   //пройденные шаги
         if (months < 1 || months > mountMax) {
             System.out.println("Введите месяц правильно.");
             System.out.println("Всего " + mountMax + " месяцев.");
+        } else if (day < 1 || day > dayMax) {
+            System.out.println("Введите день правильно.");
+            System.out.println("В месяце всего " + dayMax + " дней.");
+        } else if (step < 0) {
+            System.out.println("Введите количество шагов правильно.");
         } else {
-            if (day <= 0 || day > dayMax) {
-                System.out.println("Введите день правильно.");
-                System.out.println("В месяце всего " + dayMax + " дней.");
-            } else if (day >= 1 && day <= dayMax && step <= 0) {
-                System.out.println("Введите количество шагов правильно.");
-            } else if (day >= 1 && day <= dayMax && step >= 0) {
-                stepMonth.get(months).set(day - 1, step);
-            } else {
-                System.out.println("Введите количество шагов правильно.");
+            stepMonth.get(months).set(day - 1, step);
             }
         }
-        return stepMonth;
-    }
-
 
     int getStepSum(int monthStat) {
         int stepSum = 0;
         ArrayList<Integer> getStepMonth = stepMonth.get(monthStat);
-        for (int i = 0; i <= getStepMonth.size(); i++) {
+        for (int i = 0; i < getStepMonth.size(); i++) {
             stepSum += getStepMonth.get(i);
         }
         return stepSum;
@@ -53,7 +48,7 @@ public class StepTracker {
     double getStepMax(int monthsStat) { // Максимальное
         int maxStepUser = 0;
         ArrayList<Integer> getStepMonth = stepMonth.get(monthsStat);
-        for (int i = 0; i <= getStepMonth.size(); i++) {
+        for (int i = 0; i < getStepMonth.size(); i++) {
             if (maxStepUser < getStepMonth.get(i)) {
                 maxStepUser = getStepMonth.get(i);
             }
@@ -88,12 +83,11 @@ public class StepTracker {
                 }
             }
         }
-        System.out.println("Ваша череда достижений составляет: " + stepSeries + " дней.");
         return stepSeries;
     }
 
     void getStaticMonths(int months) { // Статистика
-        if (months <= mountMax && months > 0) {
+        if (months >= 1 && months <= mountMax ) {
             System.out.println("Общее количество шагов: " + getStepSum(months));
             getStepStat(months);
             getStepSum(months);
@@ -101,7 +95,7 @@ public class StepTracker {
             System.out.println("Среднее количество шагов:" + getStepAverage(months));
             System.out.println("Пройденная дистанция: " + converter.stepDistance(getStepSum(months)) + " в км.");
             System.out.println("Количество сожжённых килокалорий: " + converter.getCalories(getStepSum(months)) + " кКал");
-            getStepWin(months);
+            System.out.println("Ваша череда достижений составляет: " + getStepWin(months) + " дней.");
         } else {
             System.out.println("Введенного месяца не существует.");
         }
